@@ -2,6 +2,21 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <h2>Completed Hunts</h2>
+    {% for hunt in completed_hunts %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                        <h2 class="article-title"> {{ hunt.Title }}</h2>
+                        <ul>
+                            <li>Detais: {{ hunt.Description }}</li>
+                            <li>Points: {{ hunt.Points }}</li>
+                            <img src="{{ hunt.proof.url }}">
+                        </ul>   
+                    </p>
+        </article>
+    {% endfor %}
+    <h2>Outstanding Hunts</h2>
     {% for hunt in hunts %}
         <article class="media content-section">
             <div class="media-body">
@@ -10,7 +25,6 @@
                         <ul>
                             <li>Detais: {{ hunt.Description }}</li>
                             <li>Points: {{ hunt.Points }}</li>
-                            <li><a href="#">link to upload proof</a></li>
                         </ul>   
                     </p>
         </article>

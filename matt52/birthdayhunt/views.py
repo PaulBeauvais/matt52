@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import scavenges
+from .models import scavenges, complete_scavenges
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import huntCompletionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 # Create your views here.
 
@@ -30,7 +31,8 @@ def scavenges_view(request):
 
     context = {
         'c_form': c_form,
-        'hunts': scavenges.objects.all()
+        'completed_hunts': scavenges.objects.filter(complete_scavenges__user=request.user),
+        'hunts': scavenges.objects.filter(~Q(complete_scavenges__user=request.user))
     }
 
     return render(request,'birthdayhunt/scavenges.html', context)
