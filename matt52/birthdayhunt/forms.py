@@ -9,3 +9,5 @@ class huntCompletionForm(forms.ModelForm):
     class Meta:
         model = complete_scavenges
         fields = ['user', 'huntId', 'proof']
+
+        widgets = {'user': forms.HiddenInput()}

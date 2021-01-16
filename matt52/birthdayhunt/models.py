@@ -20,4 +20,7 @@ class scavenges(models.Model):
 class complete_scavenges(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     huntId = models.ForeignKey(scavenges, on_delete=models.CASCADE)
-    proof = models.ImageField(default='Lier-vs.-Liar.jpg', upload_to='proof_pics')
+    proof = models.ImageField(default='Lier-vs.-Liar.jpg', upload_to='proof_pics/')
+
+    class Meta:
+        verbose_name_plural = "complete scavenges"
