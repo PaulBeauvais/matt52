@@ -1,27 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
-
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data.get('registrationCode') != 'mattfiftytwo':
+            if form.cleaned_data.get('validation_code') != 'mattfiftytwo':
                 username = form.cleaned_data.get('username')
-                messages.error(request, f'invalid registration code: {username} not created!')
-                return redirect('hunt-home')
+                messages.success(request, f'Validation Code Incorrect: Please Try again.  User {username} not created')
+                return redirect('hunt-register')
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
-                messages.success(request, f'Account created for {username}!  Please log in')
+                messages.success(request, f'Your account has been created! You are now able to log in')
                 return redirect('hunt-login')
     else:
-        form = UserRegistrationForm()
-    
+        form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
 
 @login_required
 def profile(request):
@@ -34,7 +33,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('hunt-profile')
+            return redirect('profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)

@@ -24,3 +24,6 @@ class complete_scavenges(models.Model):
 
     class Meta:
         verbose_name_plural = "complete scavenges"
+
+    def __str__(self):
+        return self.proof.url  # What you want to showhun
