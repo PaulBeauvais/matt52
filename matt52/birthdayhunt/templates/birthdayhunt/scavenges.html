@@ -21,13 +21,13 @@
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                        <h2 class="article-title"> {{ hunt.huntId.Title }}</h2>
-                        <ul>
-                            <li>Detais: {{ hunt.huntId.Description }}</li>
-                            <li>Points: {{ hunt.huntId.Points }}</li>
-                            <img src="{{ hunt.proof.url }}" width="600" height="600">
-                        </ul>   
-                    </p>
+                        <b class="article-title"> {{ hunt.huntId.Title }}</b>
+                            <div class='tests'>
+                                <img src="{{ hunt.proof.url }}" style="max-width:100%;height:auto;">
+                            </div>
+                            Points: {{ hunt.huntId.Points }}   
+                </div>     
+            </div>   
         </article>
     {% endfor %}
     
@@ -39,7 +39,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">
-                Record Your Hunt
+                Record Your Hunt - Start Time: Time will go here}
             </legend>
             {{ c_form|crispy }}
         </fieldset>

@@ -1,3 +1,8 @@
+.tests {
+  max-width: 60px;
+  height: 60px;
+  }
+
 body {
     background: #fafafa;
     color: #333333;
@@ -58,7 +63,7 @@ body {
   .article-metadata {
     padding-bottom: 1px;
     margin-bottom: 4px;
-    border-bottom: 1px solid #e3e3e3
+    border-bottom: 1px solid #e3e3e3;
   }
   
   .article-metadata a:hover {
@@ -83,12 +88,9 @@ body {
     font-size: 2.5rem;
   }
 
-  .image600 {
+  .image600 img{
     height: auto;
     max-width: 600px;
     }
-  
-  .image600 {
-    height: auto;
-    max-width: 200px;
-    }
+
+ 

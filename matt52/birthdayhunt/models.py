@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class scavenges(models.Model):
     Title = models.CharField(max_length=100)
@@ -21,9 +22,10 @@ class complete_scavenges(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     huntId = models.ForeignKey(scavenges, on_delete=models.CASCADE)
     proof = models.ImageField(default='Lier-vs.-Liar.jpg', upload_to='proof_pics/')
+    finish_time = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "complete scavenges"
 
     def __str__(self):
-        return self.proof.url  # What you want to showhun
+        return f'{self.user} | {self.id}' # What you want to showhun
