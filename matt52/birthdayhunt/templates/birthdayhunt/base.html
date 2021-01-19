@@ -19,7 +19,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
           <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'hunt-home' %}">Matt's 52nd Birthday Scavenger Hunt</a>
+            <a class="navbar-brand" href="{% url 'hunt-home' %}">Matt's 52nd Birthday Scavenger Hunt</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,6 +54,7 @@
             {% endfor %}
           {% endif %}
           <div class="col-md-8">
+            {% block sidecontent %}{% endblock sidecontent %}
             {% block content %}{% endblock %}
           </div>
 
