@@ -23,10 +23,20 @@ class complete_scavenges(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     huntId = models.ForeignKey(scavenges, on_delete=models.CASCADE)
     proof = models.ImageField(default='Lier-vs.-Liar.jpg', upload_to='proof_pics/')
-    finish_time = models.DateTimeField(auto_now=True)
+    finish_time = models.DateTimeField(auto_now=True, editable=True)
 
     class Meta:
         verbose_name_plural = "complete scavenges"
 
     def __str__(self):
         return f'{self.user} | {self.id}' # What you want to showhun
+
+class finished_hunters(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    finish_time = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Finished Hunters"
+
+    def __str__(self):
+        return f'{self.user} ' # What you want to showhun

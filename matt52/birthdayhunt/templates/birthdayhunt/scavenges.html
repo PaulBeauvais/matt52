@@ -35,21 +35,26 @@
 {% endblock content %}
 
 {% block sidecontent %} 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">
-                Record Your Hunt - Start Time: Time will go here}
-            </legend>
-            {{ c_form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class=btn btn-outline-info" type="submit">Update</button>
-        </div>
-    </form>
 
+    {% if iscomplete %}
+        <h2> You have completed the challenge </h2><br>
+        <b>your start time was: {{ starttime.starttime }} </b>
+    {% else %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Record Your Hunt - Start Time: {{ starttime.starttime }}
+                </legend>
+                {{ c_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class=btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
 
-
-
+        <a href="{% url 'hunt-complete' %}" ><b>I have completed all the hunts I am going to - record my time</b></a><br>
+        you will no longer be able to complete challenges after clicking on this link
+    {% endif %}
 
 {%  endblock sidecontent %}

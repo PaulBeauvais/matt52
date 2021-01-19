@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import scavenges, complete_scavenges
+from .models import scavenges, complete_scavenges, finished_hunters
 from users.models import Profile
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -7,7 +7,8 @@ from .forms import huntCompletionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q, Sum
-from datetime import datetime
+from datetime import datetime, date
+from django.utils import timezone
 
 
 # Create your views here.
@@ -41,13 +42,20 @@ def scavenges_view(request):
 
     else:
         c_form = huntCompletionForm(initial={'user': request.user})
-       
+    
+    userprofile = Profile.objects.filter(user=request.user).select_related()
+    userstarttime = timezone.localtime(userprofile[0].starttime)
+    userstarttime = userstarttime.strftime("%b %d %Y %H:%M")
+
     context = {
         'c_form': c_form,
         'completed_hunts': complete_scavenges.objects.filter(user=request.user).select_related(),
         'hunts': scavenges.objects.filter(~Q(complete_scavenges__user=request.user)).select_related(),
-         }
+        'iscomplete': finished_hunters.objects.filter(user=request.user).select_related(),
+        'starttime':  {'starttime': userstarttime},
 
+        }
+   
 
     return render(request,'birthdayhunt/scavenges.html', context)
 
@@ -63,3 +71,12 @@ def photos_view(request):
 
 
     return render(request,'birthdayhunt/photos.html', context)
+
+
+@login_required
+def stop_timer_view(request):
+       
+    finisher = finished_hunters(user = request.user)
+    finisher.save()
+
+    return redirect('hunt-scavenges')
