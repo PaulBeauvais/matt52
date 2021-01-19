@@ -1,24 +1,56 @@
 {% extends 'birthdayhunt/base.html' %}
 {% load crispy_forms_tags %}
 
+{% block sidecontent %} 
+   <div class="content-section">
+    {% if iscomplete %}
+        <h2> You have completed the challenge </h2><br>
+        <b>your start time was: {{ starttime.starttime }} </b>
+    {% else %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                Record Your Hunt <br>
+                Start Time: {{ starttime.starttime }}
+            </legend>
+            {{ c_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class=btn btn-outline-info" type="submit">Update</button>
+        </div>
+    </form>
+            <a href="{% url 'hunt-complete' %}" ><b>I have completed all the hunts I am going to - record my time</b></a><br>
+        you will no longer be able to complete challenges after clicking on this link
+    {% endif %}
+    </div>
+
+{%  endblock sidecontent %}
+
+
+
 {% block content %}
-    <h2>Outstanding Hunts</h2>
+      <div class="table-responsive-sm" style="height: 350px; overflow-y: scroll;">
+        <table class="table">
+        <tbody>
+         <tr><td>
+    <h4>Outstanding Hunts</h4>
     {% for hunt in hunts %}
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
                         <b class="article-title"> {{ hunt.Title }}</b>
                         <ul>
-                            <li>Detais: {{ hunt.Description }}</li>
+                            <li>Details: {{ hunt.Description }}</li>
                             <li>Points Awarded: {{ hunt.Points }}</li>
                         </ul>   
                     </p>
         </article>
     {% endfor %}
     
-    <h2>Completed Hunts</h2>
+    <h4>Completed Hunts</h4>
     {% for hunt in completed_hunts %}
-        <article class="media content-section">
+        <article class="media content-section" style="text-decoration: line-through;">
             <div class="media-body">
                 <div class="article-metadata">
                         <b class="article-title"> {{ hunt.huntId.Title }}</b>
@@ -30,31 +62,9 @@
             </div>   
         </article>
     {% endfor %}
-    
+
+          </td></tr>
+        </tbody></table>
+      </div>    
 
 {% endblock content %}
-
-{% block sidecontent %} 
-
-    {% if iscomplete %}
-        <h2> You have completed the challenge </h2><br>
-        <b>your start time was: {{ starttime.starttime }} </b>
-    {% else %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">
-                    Record Your Hunt - Start Time: {{ starttime.starttime }}
-                </legend>
-                {{ c_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class=btn btn-outline-info" type="submit">Update</button>
-            </div>
-        </form>
-
-        <a href="{% url 'hunt-complete' %}" ><b>I have completed all the hunts I am going to - record my time</b></a><br>
-        you will no longer be able to complete challenges after clicking on this link
-    {% endif %}
-
-{%  endblock sidecontent %}
