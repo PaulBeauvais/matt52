@@ -18,7 +18,22 @@ def home(request):
     userids = [id.id for id in users]
     userResults = []
 
+
+
     for user in users:
+        userprofile = Profile.objects.filter(user=request.user).select_related()
+        userstarttime = timezone.localtime(userprofile[0].starttime)
+        #userstarttime = userstarttime.strftime("%b %d %Y %H:%M")
+  
+
+        userendtime = finished_hunters.objects.filter(user=request.user).select_related()
+        if userendtime:
+            userendtime = timezone.localtime(userendtime[0].finish_time)
+            elapsedtime =  userendtime - userstarttime
+            print(f'1 {elapsedtime}')
+            elapsedtime = elapsedtime.total_seconds() // 60
+            print(f' time {elapsedtime}')
+
         points = complete_scavenges.objects.filter(user=1).select_related().aggregate(points=Sum('huntId__Points'))
         userResults.append({'id': user.id, 'name': user.username, 'points': points['points']})   
 
@@ -41,7 +56,7 @@ def scavenges_view(request):
             return redirect('hunt-scavenges')
 
     else:
-        c_form = huntCompletionForm(initial={'user': request.user})
+        c_form = huntCompletionForm(initial={'user': request.user}, user=request.user)
     
     userprofile = Profile.objects.filter(user=request.user).select_related()
     userstarttime = timezone.localtime(userprofile[0].starttime)
