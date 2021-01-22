@@ -26,7 +26,7 @@ SECRET_KEY = '8v^d122apz0!t^*!8@9^o0+ppo1urrdlen+#^rbv5=xm16ndru'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.11','127.0.0.1','jaberwok.no-ip.biz']
+ALLOWED_HOSTS = ['192.168.0.242','127.0.0.1','jaberwok.no-ip.biz']
 
 
 # Application definition

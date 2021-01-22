@@ -37,8 +37,15 @@
             </tr>
         {% endfor %}
         <tr><td style="vertical-align: top;" colspan="3">Riply Says Start Now</td></tr>
-
-        <tr><td colspan="3"><img style="width: 598px; height: auto;" src="https://thatwasabitmental.files.wordpress.com/2012/02/aliens1.jpg" align="middle">
+        {% if user.is_authenticated %}
+            {% if photo %}
+            <tr><td colspan="3"><img class="image600" src="{{ photo.proof.url }}" >
+            {% else %}
+                <tr><td colspan="3"><img style="width: 598px; height: auto;" src="https://thatwasabitmental.files.wordpress.com/2012/02/aliens1.jpg" align="middle">
+            {% endif %}
+        {% else %}
+             <tr><td colspan="3"><img style="width: 598px; height: auto;" src="https://thatwasabitmental.files.wordpress.com/2012/02/aliens1.jpg" align="middle">
+        {% endif %}
         </td>
         </tr>
     </tbody>

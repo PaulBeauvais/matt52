@@ -30,7 +30,8 @@ def home(request):
     userResults = []
 
 
-
+    firstPhoto = complete_scavenges.objects.all().order_by('-finish_time').first()
+    #firstPhoto = firstPhoto.proof.url
     for user in users:
         userprofile = Profile.objects.filter(user=user.id).select_related()
         #userobject = User.objects.filter(id=user.id)
@@ -39,7 +40,6 @@ def home(request):
         elapsedtime = ''
 
         userendtime = finished_hunters.objects.filter(user=user).select_related()
-        print(userendtime.values())
 
         if userendtime:
             userendtime = timezone.localtime(userendtime[0].finish_time)
@@ -52,7 +52,6 @@ def home(request):
 
 
         points = complete_scavenges.objects.filter(user=user.id).select_related().aggregate(points=Sum('huntId__Points'))
-        print(f'points {user.id}, {points}')
         
         if points['points'] != None:
             userResults.append({'id': user.id, 'name': user.username, 'points': points['points'], 'endtimer': endtimer, 'userelapsedtime': elapsedtime })   
@@ -62,7 +61,7 @@ def home(request):
         
         userResults = sorted(userResults, key = lambda i: (i['points'], i['userelapsedtime']))
 
-    context = {'users': userResults}
+    context = {'users': userResults, 'photo': firstPhoto}
 
     return render(request, 'birthdayhunt/home.html', context)
 
@@ -105,7 +104,7 @@ def photos_view(request):
        
  
     context = {
-        'photos': complete_scavenges.objects.filter(user=request.user).select_related(),
+        'photos': complete_scavenges.objects.filter(user=request.user).select_related().order_by('-finish_time'),
 
     }
 

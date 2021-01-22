@@ -41,7 +41,7 @@
                 <div class="article-metadata">
                         <b class="article-title"> {{ hunt.Title }}</b>
                         <ul>
-                            <li>Details: {{ hunt.Description }}</li>
+                            <li>Details: {{ hunt.Description| safe }}</li>
                             <li>Points Awarded: {{ hunt.Points }}</li>
                         </ul>   
                     </p>
@@ -54,10 +54,11 @@
             <div class="media-body">
                 <div class="article-metadata">
                         <b class="article-title"> {{ hunt.huntId.Title }}</b>
-                            <div class='tests'>
+                            <div>
                                 <img src="{{ hunt.proof.url }}" style="max-width:100%;height:auto;">
                             </div>
-                            Points: {{ hunt.huntId.Points }}   
+                            Points: {{ hunt.huntId.Points }}
+                              
                 </div>     
             </div>   
         </article>
